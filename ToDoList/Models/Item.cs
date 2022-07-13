@@ -14,13 +14,13 @@ namespace ToDoList.Models
     }
 
     public static List<Item> GetAll()
-  {
-    return _instances;
-  }
+    {
+      return _instances;
+    }
 
     public static void ClearAll()
-  {
-    _instances.Clear();
-  }
+    {
+      _instances.Clear();
+    }
   }
 }
