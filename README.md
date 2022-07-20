@@ -1,8 +1,8 @@
-# {C# Application Name}
+# To Do List
 
 #### By _**Zhibin Liang**_  
 
-#### _{Brief description of application}_  
+#### _A web application for listing and sorting thing to do by customized categories._  
 
 ---
 ## Technologies Used
@@ -15,7 +15,7 @@
 ---
 ## Description
 
-_{This is a detailed description of your application. Give as much detail as needed to explain what the application does as well as any other information you want users or other developers to have.}_
+_A user can add/view things to do by customized categories._
 
 ---
 ## Setup/Installation Requirements
@@ -25,8 +25,8 @@ _{This is a detailed description of your application. Give as much detail as nee
 <li>Install <em>Microsoft .NET SDK<em></li>
 <li>Clone the repo
 
-```sh
-$ git clone
+```
+$ git clone https://github.com/zbl14/ToDoList.Solution.git
 ```
 </li>
 </details>
@@ -34,11 +34,14 @@ $ git clone
 <details>
 <summary><strong>To Run</strong></summary>
 Navigate to  
-   <pre>ProjectName.Solution
-   ├── <strong>ProjectName</strong>
-   └── ProjectName.Tests</pre>
+   <pre>ToDoList.Solution
+   ├── <strong>ToDoList</strong>
+   └── ToDoList.Tests</pre>
 
-```sh
+```
+$ dotnet restore
+```
+```
 $ dotnet run
 ```
 </details>
@@ -46,11 +49,11 @@ $ dotnet run
 <details>
 <summary><strong>For Testing</strong></summary>
 Navigate to  
-    <pre>ProjectName.Solution
-    ├── ProjectName
-    └── <strong>ProjectName.Tests</strong></pre>
+    <pre>ToDoList.Solution
+    ├── ToDoList
+    └── <strong>ToDoList.Tests</strong></pre>
 
-```sh
+```
 $ dotnet restore
 ```
 ```sh
