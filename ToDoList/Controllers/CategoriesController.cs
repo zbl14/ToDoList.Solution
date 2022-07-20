@@ -58,5 +58,14 @@ namespace ToDoList.Controllers
       Category.ClearAll();
       return RedirectToAction("Index");
     }
+
+    // [HttpPost("/categories/{categoryId}/items/delete")]
+    // public ActionResult DeleteAllItems(int categoryId)
+    // {
+    //   // Dictionary<string, object> model = new Dictionary<string, object>();
+    //   Category foundCategory = Category.Find(categoryId);
+    //   foundCategory.Items.ClearAll();
+    //   return RedirectToAction("Index");
+    // }
   }
 }

@@ -36,5 +36,10 @@ namespace ToDoList.Models
     {
       Items.Add(item);
     }
+
+    // public void ClearItem()
+    // {
+    //   Item.ClearAll();
+    // }
   }
 }

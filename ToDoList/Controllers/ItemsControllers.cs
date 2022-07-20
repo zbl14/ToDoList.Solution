@@ -51,11 +51,11 @@ namespace ToDoList.Controllers
       return View(model);
     }
 
-    [HttpPost("/items/delete")]
-    public ActionResult DeleteAll()
-    {
-      Item.ClearAll();
-      return View();
-    }
+    // [HttpPost("/items/delete")]
+    // public ActionResult DeleteAll()
+    // {
+    //   Item.ClearAll();
+    //   return View();
+    // }
   }
 }
