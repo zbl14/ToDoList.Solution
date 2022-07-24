@@ -75,9 +75,10 @@ namespace ToDoList.Models
     {
       MySqlConnection conn = DB.Connection();
       conn.Open();
-      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
 
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
       cmd.CommandText = "INSERT INTO items (description) VALUES (@ItemDescription);";
+
       cmd.Parameters.AddWithValue("@ItemDescription", this.Description);
       // The following 4 lines are equal to the above line
       // MySqlParameter param = new MySqlParameter();
@@ -94,10 +95,35 @@ namespace ToDoList.Models
       }
     }
 
-    public static Item Find(int searchId)
+    public static Item Find(int id)
     {
-      Item placeholderItem = new Item("placeholderItem");
-      return placeholderItem;
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+      cmd.CommandText = "SELECT * FROM `items` WHERE id = @ThisId;";
+
+      MySqlParameter param = new MySqlParameter();
+      param.ParameterName = "@ThisId";
+      param.Value = id;
+      cmd.Parameters.Add(param);
+
+      MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
+      int itemId = 0;
+      string itemDescription = "";
+      while (rdr.Read())
+      {
+        itemId = rdr.GetInt32(0);
+        itemDescription = rdr.GetString(1);
+      }
+      Item foundItem = new Item(itemDescription, itemId);
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
+      return foundItem;
     }
   }
 }
