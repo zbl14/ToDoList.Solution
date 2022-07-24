@@ -6,7 +6,7 @@ namespace ToDoList.Models
   public class Item
   {
     public string Description { get; set; }
-    public int Id { get; }
+    public int Id { get; set; }
 
     public Item(string description)
     {
@@ -72,6 +72,25 @@ namespace ToDoList.Models
 
     public void Save()
     {
+      MySqlConnection conn = DB.Connection();
+      conn.Open();
+      MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
+
+      cmd.CommandText = "INSERT INTO items (description) VALUES (@ItemDescription);";
+      cmd.Parameters.AddWithValue("@ItemDescription", this.Description);
+      // The following 4 lines are equal to the above line
+      // MySqlParameter param = new MySqlParameter();
+      // param.ParameterName = "@ItemDescription";
+      // param.Value = this.Description;
+      // cmd.Parameters.Add(param);    
+      cmd.ExecuteNonQuery();
+      Id = (int) cmd.LastInsertedId;
+
+      conn.Close();
+      if (conn != null)
+      {
+        conn.Dispose();
+      }
     }
 
     public static Item Find(int searchId)
