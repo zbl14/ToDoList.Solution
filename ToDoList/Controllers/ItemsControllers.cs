@@ -25,6 +25,7 @@ namespace ToDoList.Controllers
 
     public ActionResult Create()
     {
+      ViewBag.PageTitle = "New Item";
       ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
       return View();
     }
