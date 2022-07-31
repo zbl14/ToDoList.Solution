@@ -23,7 +23,7 @@
       @using (Html.BeginForm("DeleteCategory", "Items"))
       {
         @Html.Hidden("joinId", @join.CategoryItemId)
-        <input type="submit" value="Delete" />
+        <button type="submit" class="btn btn-danger">Remove this item from @join.Category.Name</button>
       }
     }
     </ul>
