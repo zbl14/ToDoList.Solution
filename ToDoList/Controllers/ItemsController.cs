@@ -1,27 +1,26 @@
-// using Microsoft.EntityFrameworkCore;
-// using Microsoft.AspNetCore.Mvc;
-// using ToDoList.Models;
-// using System.Collections.Generic;
-// using System.Linq;
-// using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using ToDoList.Models;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
-// namespace ToDoList.Controllers
-// {
-//   public class ItemsController : Controller
-//   {
-//     private readonly ToDoListContext _db;
+namespace ToDoList.Controllers
+{
+  public class ItemsController : Controller
+  {
+    private readonly ToDoListContext _db;
 
-//     public ItemsController(ToDoListContext db)
-//     {
-//       _db = db;
-//     }
+    public ItemsController(ToDoListContext db)
+    {
+      _db = db;
+    }
 
-//     public ActionResult Index()
-//     {
-//       List<Item> model = _db.Items.Include(item => item.Category).ToList();
-//       ViewBag.PageTitle = "View All Items";
-//       return View(model);
-//     }
+    public ActionResult Index()
+    {
+      ViewBag.PageTitle = "View All Items";
+      return View(_db.Items.ToList());
+    }
 
 //     public ActionResult Create()
 //     {
@@ -38,11 +37,14 @@
 //       return RedirectToAction("Index");
 //     }
 
-//     public ActionResult Details(int id)
-//     {
-//       Item thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
-//       return View(thisItem);
-//     }
+    public ActionResult Details(int id)
+    {
+      var thisItem = _db.Items
+        .Include(item => item.JoinEntities)
+        .ThenInclude(join => join.Category)
+        .FirstOrDefault(item => item.ItemId == id);
+      return View(thisItem);
+    }
 
 //     public ActionResult Edit(int id)
 //     {
@@ -73,5 +75,5 @@
 //       _db.SaveChanges();
 //       return RedirectToAction("Index");
 //     }
-//   }
-// }
+  }
+}
