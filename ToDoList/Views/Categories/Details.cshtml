@@ -1,4 +1,4 @@
-@* @{
+@{
   Layout = "_Layout";
 }
 
@@ -8,10 +8,24 @@
   <h2>To Do List Category Details: </h2>
   <hr />
   <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)<h3>
-  <p>@Html.ActionLink("Edit Category", "Edit", new { id = Model.CategoryId })</p>
+
+  @if(@Model.JoinEntities.Count == 0)
+  {
+    <p>This category does not contain any items</p>
+  }
+  else
+  {
+    <h4>Items the category contains:</h4>
+    <ul>
+    @foreach(var join in Model.JoinEntities)
+    {
+      <li>@join.Item.Description</li>
+    }
+    </ul>
+  }
 
   <p>@Html.ActionLink("Add new item", "Create", "Items")</p>
-
+  <p>@Html.ActionLink("Edit Category", "Edit", new { id = Model.CategoryId })</p>
   <p>@Html.ActionLink("Delete Category", "Delete", new { id = Model.CategoryId })</p>
   <p>@Html.ActionLink("Back to list", "Index")</p>
-</div> *@
+</div>
