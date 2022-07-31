@@ -4,13 +4,10 @@
 
 @model ToDoList.Models.Category
 
-<div class="container">
-  <div class="jumbotron">
-    <h2>Edit</h2>
-  </div>
-
-  <h4>Edit this Category: @Html.DisplayFor(model => model.Name)</h4>
-
+<div class="jumbotron text-center">
+  <h2>Edit @Html.DisplayFor(model => model.Name)</h2>
+</div>
+<div>
   @using (Html.BeginForm())
   {
       @Html.HiddenFor(model => model.CategoryId)

@@ -54,6 +54,7 @@ namespace ToDoList.Controllers
 
     public ActionResult Edit(int id)
     {
+      ViewBag.PageTitle="Edit";
       var thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
       ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
       return View(thisItem);
@@ -73,6 +74,7 @@ namespace ToDoList.Controllers
     
     public ActionResult AddCategory(int id)
     {
+      ViewBag.PageTitle="Add Category";
       var thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
       ViewBag.CategoryId = new SelectList(_db.Categories, "CategoryId", "Name");
       return View(thisItem);
@@ -91,6 +93,7 @@ namespace ToDoList.Controllers
 
     public ActionResult Delete(int id)
     {
+      ViewBag.PageTitle="Delete";
       var thisItem = _db.Items.FirstOrDefault(item => item.ItemId == id);
       return View(thisItem);
     }

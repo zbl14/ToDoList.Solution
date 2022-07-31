@@ -5,10 +5,11 @@
 @using ToDoList.Models;
 @model List<ToDoList.Models.Item>;
 
-<div class="container">
-  <div class="jumbotron text-center">
-    <h2>Items</h2>
-  </div>
+
+<div class="jumbotron text-center">
+  <h2>Items List</h2>
+</div>
+<div>
   @if (@Model.Count == 0)
   {
     <h3>No items have been added yet!</h3>

@@ -4,9 +4,10 @@
 
 @model ToDoList.Models.Category
 
-<div class="container">
-  <h4>Add a new Category</h4>
-
+<div class="jumbotron text-center">
+  <h2>Add a new Category</h2>
+</div>
+<div>
   @using (Html.BeginForm())
   {
     @Html.LabelFor(model => model.Name)

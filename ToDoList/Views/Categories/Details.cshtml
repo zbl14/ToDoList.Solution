@@ -4,11 +4,10 @@
 
 @model ToDoList.Models.Category
 
-<div class="container">
-  <h2>To Do List Category Details: </h2>
-  <hr />
-  <h3>@Html.DisplayNameFor(model => model.Name): @Html.DisplayFor(model => model.Name)<h3>
-
+<div class="jumbotron text-center">
+  <h2>@Html.DisplayFor(model => model.Name) Details</h2>
+</div>
+<div>
   @if(@Model.JoinEntities.Count == 0)
   {
     <p>This category does not contain any items</p>
