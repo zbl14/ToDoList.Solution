@@ -44,6 +44,7 @@ namespace ToDoList.Controllers
 
     public ActionResult Details(int id)
     {
+      ViewBag.PageTitle="Item Details";
       var thisItem = _db.Items
         .Include(item => item.JoinEntities)
         .ThenInclude(join => join.Category)
