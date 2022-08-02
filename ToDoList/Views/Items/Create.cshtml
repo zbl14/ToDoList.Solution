@@ -13,6 +13,9 @@
     @Html.LabelFor(model => model.Description)
     @Html.TextBoxFor(model => model.Description)
 
+    @Html.Label("Due Date")
+    @Html.TextBoxFor(model => model.DueDate, new { type="date"})
+
     @Html.Label("Select Category")
     @Html.DropDownList("CategoryId")
 
