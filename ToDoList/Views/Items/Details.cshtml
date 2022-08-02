@@ -8,6 +8,13 @@
   <h2>Details of @Html.DisplayFor(model => model.Description) </h2>
 </div>
 <div>
+  @Html.Label("Due Date")
+  @Html.DisplayFor(model => model.DueDate)
+
+  @Html.Label("Completed")
+  @Html.DisplayFor(model => model.IsCompleted)
+</div>
+<div>
   @if(@Model.JoinEntities.Count == 0)
   {
     <p>This item does not belong to any categories</p>
