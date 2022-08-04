@@ -24,32 +24,28 @@ namespace ToDoList.Controllers
       _db = db;
     }
 
-    // public ActionResult Index(string searchString)
-    // {
-    //   ViewBag.PageTitle = "View All Items";
-    //   if (!String.IsNullOrEmpty(searchString))
-    //   {
-    //     List<Item> model = _db.Items
-    //       .Where(item => item.Description.Contains(searchString))
-    //       .OrderBy(item => item.Description)
-    //       .ToList();
-    //     return View(model);
-    //   }
-    //   else
-    //   {
-    //     List<Item> model = _db.Items
-    //       .OrderBy(item => item.Description)
-    //       .ToList();
-    //     return View(model);
-    //   }
-    // }
-
-    public async Task<ActionResult> Index()
+    public async Task<ActionResult> Index(string searchString)
     {
+      ViewBag.PageTitle = "View All Items";
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
       var currentUser = await _userManager.FindByIdAsync(userId);
-      var userItems = _db.Items.Where(entry => entry.User.Id == currentUser.Id).ToList();
-      return View(userItems);
+      if (!String.IsNullOrEmpty(searchString))
+      {
+        var userItems = _db.Items
+          .Where(entry => entry.User.Id == currentUser.Id)
+          .Where(item => item.Description.Contains(searchString))
+          .OrderBy(item => item.DueDate)
+          .ToList();
+        return View(userItems);
+      }
+      else
+      {
+        var userItems = _db.Items
+          .Where(entry => entry.User.Id == currentUser.Id)
+          .OrderBy(item => item.DueDate)
+          .ToList();
+        return View(userItems);
+      }
     }
 
     public ActionResult Create()
