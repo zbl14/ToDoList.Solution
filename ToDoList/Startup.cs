@@ -53,7 +53,7 @@ namespace ToDoList
 
       app.UseRouting();
 
-      app.UseAuthentication();
+      app.UseAuthorization();
 
       app.UseEndpoints(routes =>
       {
