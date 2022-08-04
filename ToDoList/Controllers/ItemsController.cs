@@ -4,6 +4,7 @@ using ToDoList.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 
 namespace ToDoList.Controllers
 {
@@ -16,10 +17,24 @@ namespace ToDoList.Controllers
       _db = db;
     }
 
-    public ActionResult Index()
+    public ActionResult Index(string searchString)
     {
       ViewBag.PageTitle = "View All Items";
-      return View(_db.Items.ToList());
+      if (!String.IsNullOrEmpty(searchString))
+      {
+        List<Item> model = _db.Items
+          .Where(item => item.Description.Contains(searchString))
+          .OrderBy(item => item.Description)
+          .ToList();
+        return View(model);
+      }
+      else
+      {
+        List<Item> model = _db.Items
+          .OrderBy(item => item.Description)
+          .ToList();
+        return View(model);
+      }
     }
 
     public ActionResult Create()
