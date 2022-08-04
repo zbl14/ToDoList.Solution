@@ -29,6 +29,7 @@ namespace ToDoList.Models
     [DisplayFormat(ApplyFormatInEditMode =true, DataFormatString = "{0:MM/dd/yyyy}")]
     public DateTime DueDate { get; set; }
 
+    public virtual ApplicationUser User { get; set; }
     public virtual ICollection<CategoryItem> JoinEntities { get;}
   }
 }

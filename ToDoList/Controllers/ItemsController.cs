@@ -5,36 +5,51 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace ToDoList.Controllers
 {
+  [Authorize]
   public class ItemsController : Controller
   {
     private readonly ToDoListContext _db;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public ItemsController(ToDoListContext db)
+    public ItemsController(UserManager<ApplicationUser> userManager,ToDoListContext db)
     {
+      _userManager = userManager;
       _db = db;
     }
 
-    public ActionResult Index(string searchString)
+    // public ActionResult Index(string searchString)
+    // {
+    //   ViewBag.PageTitle = "View All Items";
+    //   if (!String.IsNullOrEmpty(searchString))
+    //   {
+    //     List<Item> model = _db.Items
+    //       .Where(item => item.Description.Contains(searchString))
+    //       .OrderBy(item => item.Description)
+    //       .ToList();
+    //     return View(model);
+    //   }
+    //   else
+    //   {
+    //     List<Item> model = _db.Items
+    //       .OrderBy(item => item.Description)
+    //       .ToList();
+    //     return View(model);
+    //   }
+    // }
+
+    public async Task<ActionResult> Index()
     {
-      ViewBag.PageTitle = "View All Items";
-      if (!String.IsNullOrEmpty(searchString))
-      {
-        List<Item> model = _db.Items
-          .Where(item => item.Description.Contains(searchString))
-          .OrderBy(item => item.Description)
-          .ToList();
-        return View(model);
-      }
-      else
-      {
-        List<Item> model = _db.Items
-          .OrderBy(item => item.Description)
-          .ToList();
-        return View(model);
-      }
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      var userItems = _db.Items.Where(entry => entry.User.Id == currentUser.Id).ToList();
+      return View(userItems);
     }
 
     public ActionResult Create()
@@ -45,14 +60,17 @@ namespace ToDoList.Controllers
     }
 
     [HttpPost]
-    public ActionResult Create(Item item, int CategoryId)
+    public async Task<ActionResult> Create(Item item, int CategoryId)
     {
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+      var currentUser = await _userManager.FindByIdAsync(userId);
+      item.User = currentUser;
       _db.Items.Add(item);
       _db.SaveChanges();
       if (CategoryId != 0)
       {
-          _db.CategoryItem.Add(new CategoryItem() { CategoryId = CategoryId, ItemId = item.ItemId });
-          _db.SaveChanges();
+        _db.CategoryItem.Add(new CategoryItem() { CategoryId = CategoryId, ItemId = item.ItemId });
+        _db.SaveChanges();
       }
       return RedirectToAction("Index");
     }

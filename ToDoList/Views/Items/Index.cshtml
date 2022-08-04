@@ -3,11 +3,11 @@
 }
 
 @using ToDoList.Models;
-@model List<ToDoList.Models.Item>;
+@model IEnumerable<ToDoList.Models.Item>
 
 
 <div class="jumbotron text-center">
-  <h2>Items List</h2>
+  <h2>Items for @User.Identity.Name</h2>
 </div>
 <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
   <div class="container-fluid">
@@ -49,25 +49,26 @@
 </nav>
 <hr />
 <div>
-  @if (@Model.Count == 0)
+  @if (Model.Any())
+  {
+    <ul>
+      @foreach(Item item in Model)
+      {
+        <li>
+          <div class="row mb-2">
+            <div class="col-sm-3">
+              @Html.ActionLink($"{item.Description}", "Details", new { id = item.ItemId }) 
+            </div>
+            <div class="col-sm-3">
+              @(item.IsCompleted ? "| Completed": @Html.Label("| Due Date is " + item.DueDate.ToString("MM/dd/yyyy")))
+            </div>
+          </div>
+        </li> 
+      }
+    </ul>
+  }
+  else
   {
     <h3>No items have been added yet!</h3>
-  } 
-
-  <ul>
-    @foreach(Item item in Model)
-    {
-      <li>
-        <div class="row mb-2">
-        <div class="col-sm-3">
-        @Html.ActionLink($"{item.Description}", "Details", new { id = item.ItemId }) 
-        </div>
-
-        <div class="col-sm-3">
-        @(item.IsCompleted ? "| Completed": @Html.Label("| Due Date is " + item.DueDate.ToString("MM/dd/yyyy")))
-        </div>
-        </div>
-      </li> 
-    }
-  </ul>
+  }
 </div>
