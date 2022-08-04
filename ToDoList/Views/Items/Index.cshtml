@@ -19,9 +19,15 @@
     @foreach(Item item in Model)
     {
       <li>
+        <div class="row mb-2">
+        <div class="col-sm-3">
         @Html.ActionLink($"{item.Description}", "Details", new { id = item.ItemId }) 
+        </div>
 
+        <div class="col-sm-3">
         @(item.IsCompleted ? "| Completed": @Html.Label("| Due Date is " + item.DueDate.ToString("MM/dd/yyyy")))
+        </div>
+        </div>
       </li> 
     }
   </ul>
