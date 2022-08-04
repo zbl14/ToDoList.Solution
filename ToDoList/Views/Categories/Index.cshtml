@@ -33,6 +33,15 @@
           </ul>
         </li>
       </ul>
+      <div>
+        @using (Html.BeginForm("Index","Categories",FormMethod.Get))
+        { 
+          <div class="d-flex" role="search">
+            @Html.TextBox("SearchString", null, new { type="search", placeholder = "Search", @class="form-control me-2"}) 
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </div>
+        }
+      </div>
     </div>
   </div>
 </nav>
@@ -47,7 +56,4 @@
   {
      <li>@Html.ActionLink($"{category.Name}", "Details", new { id = category.CategoryId })</li>
   }
-
-  <p>@Html.ActionLink("Add new category", "Create")</p>
-  <p>@Html.ActionLink("Home", "Index", "Home")</p>
 </div>

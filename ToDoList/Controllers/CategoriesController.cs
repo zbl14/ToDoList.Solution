@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ToDoList.Models;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace ToDoList.Controllers
 {
@@ -15,11 +16,24 @@ namespace ToDoList.Controllers
       _db = db;
     }
 
-    public ActionResult Index()
+    public ActionResult Index(string searchString)
     {
-      ViewBag.PageTitle = "View All Categories";
-      List<Category> model = _db.Categories.ToList();
-      return View(model);
+      ViewBag.PageTitle = "View All Courses";
+      if (!String.IsNullOrEmpty(searchString))
+      {
+        List<Category> model = _db.Categories
+          .Where(category => category.Name.Contains(searchString))
+          .OrderBy(category => category.Name)
+          .ToList();
+        return View(model);
+      }
+      else
+      {
+        List<Category> model = _db.Categories
+          .OrderBy(category => category.Name)
+          .ToList();
+        return View(model);
+      }
     }
 
     public ActionResult Create()
